@@ -1,10 +1,10 @@
 #!/bin/sh
 
 hostname=${1}
-ip=${2}
+ip_termination=${2}
 
 if [ -z "${hostname}" ]; then echo "missing required hostname" && exit 1; fi
-if [ -z "${ip}" ]; then echo "missing required ip" && exit 1; fi
+if [ -z "${ip_termination}" ]; then echo "missing required ip termination" && exit 1; fi
 
 cp -v pi-energy-saver.sh /media/pedro/rootfs/home/pi/
 cp -v pi-first-boot.sh /media/pedro/rootfs/home/pi/
@@ -38,9 +38,19 @@ cat /media/pedro/rootfs/etc/hosts
 
 sudo echo "
 interface wlan0
-static ip_address=192.168.1.${ip}
+static ip_address=192.168.1.${ip_termination}
 static_routers=192.168.1.1
 static domain_name_servers=192.168.1.1 1.1.1.1
 " >> /media/pedro/rootfs/etc/dhcpcd.conf
 echo "[/etc/dhcpcd.conf]"
 cat /media/pedro/rootfs/etc/dhcpcd.conf
+
+sudo echo "
+auto wlan0
+iface wlan0 inet static
+ address 192.168.1.${ip_termination}
+ netmask 255.255.255.0
+ gateway 192.168.1.1
+ dns-nameservers 192.168.1.1 1.1.1.1
+"
+
