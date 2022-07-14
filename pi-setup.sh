@@ -1,8 +1,10 @@
 #!/bin/sh
 
 hostname=${1}
+ip=${2}
 
 if [ -z "${hostname}" ]; then echo "missing required hostname" && exit 1; fi
+if [ -z "${ip}" ]; then echo "missing required ip" && exit 1; fi
 
 cp -v pi-energy-saver.sh /media/pedro/rootfs/home/pi/
 cp -v pi-first-boot.sh /media/pedro/rootfs/home/pi/
@@ -27,13 +29,16 @@ sudo echo "
 192.168.1.103   pi103
 192.168.1.104   pi104
 192.168.1.105   pi105
+
+192.168.1.199   pi-registry
 " >> /media/pedro/rootfs/etc/hosts
 echo "[/etc/hosts]"
 cat /media/pedro/rootfs/etc/hosts
 
+sudo sed -i "s/raspberrypi/${hostname}/g" /media/pedro/rootfs/etc/dhcpcd.conf
 sudo echo "
 interface wlan0
-static ip_address=192.168.1.${hostname}
+static ip_address=192.168.1.${ip}
 static_routers=192.168.1.1
 static domain_name_servers=192.168.1.1 1.1.1.1
 " >> /media/pedro/rootfs/etc/dhcpcd.conf
