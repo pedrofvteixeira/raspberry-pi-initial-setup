@@ -22,6 +22,7 @@ sudo echo "${hostname}" > /media/pedro/rootfs/etc/hostname
 echo "[/etc/hostname]"
 cat /media/pedro/rootfs/etc/hostname
 
+sudo sed -i "s/raspberrypi/${hostname}/g" /media/pedro/rootfs/etc/hosts
 sudo echo "
 192.168.1.100   pi100
 192.168.1.101   pi101
@@ -35,7 +36,6 @@ sudo echo "
 echo "[/etc/hosts]"
 cat /media/pedro/rootfs/etc/hosts
 
-sudo sed -i "s/raspberrypi/${hostname}/g" /media/pedro/rootfs/etc/hosts
 sudo echo "
 interface wlan0
 static ip_address=192.168.1.${ip}
