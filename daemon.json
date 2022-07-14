@@ -1,5 +1,5 @@
 {
     "insecure-registries": [
-            "pi100:5000"
+            "pi-registry:5000"
     ]
 }
