@@ -23,6 +23,11 @@ apt update && apt install -y screen vim htop
 #echo "export PATH=/usr/local/go/bin:$PATH:$GOPATH/bin" >> /home/pi/.bashrc
 
 ##
+# install java 17 (lastest available one for armv6, still no jdk 21...)
+##
+sudo apt install -y openjdk-17-jre-headless
+
+##
 # install docker
 ##
 sudo apt update
@@ -31,7 +36,8 @@ sudo apt install -y \
      ca-certificates \
      curl \
      gnupg2 \
-     software-properties-common
+     software-properties-common \
+     docker-compose
 
 # Get the Docker signing key for packages
 curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
